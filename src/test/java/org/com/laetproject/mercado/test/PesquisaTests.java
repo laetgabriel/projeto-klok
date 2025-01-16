@@ -9,7 +9,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 
 @DisplayName("Testes Automatizados da funcionalidade de pesquisa")
-public class PesquisaTest {
+public class PesquisaTests {
 
     private WebDriver navegador;
 
