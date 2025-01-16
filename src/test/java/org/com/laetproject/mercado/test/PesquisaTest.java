@@ -25,21 +25,16 @@ public class PesquisaTest {
     @Test
     @DisplayName("Registrar uma pesquisa no Mercado Livre com dados válidos")
     public void testPesquisaComDadosValidos() {
-        try {
 
-            HomePage homePage = new HomePage(navegador);
-            homePage.acessarPaginaHomeMercadoLivre();
-            homePage.inserirPesquisaMercadoLivre("cadeira ergonomica");
-            homePage.fazerPesquisaMercadoLivre();
+        HomePage homePage = new HomePage(navegador);
+        homePage.acessarPaginaHomeMercadoLivre();
+        homePage.inserirPesquisaMercadoLivre("cadeira ergonomica");
+        homePage.fazerPesquisaMercadoLivre();
 
+        SearchPage searchPage = new SearchPage(navegador);
+        String resultado = searchPage.obterResultadoPesquisaValida();
+        Assertions.assertNotNull(resultado, "O item resultante foi encontrado");
 
-            SearchPage searchPage = new SearchPage(navegador);
-            String resultado = searchPage.obterResultadoPesquisaValida();
-            Assertions.assertNotNull(resultado, "O item resultante foi encontrado");
-
-        } catch (Exception e) {
-            navegador.quit();
-        }
     }
 
     @Test
@@ -47,21 +42,18 @@ public class PesquisaTest {
     public void testPesquisaComDadosInvalidos() {
         WebDriverManager.chromedriver().setup();
         WebDriver navegador = new ChromeDriver();
-        try {
-            navegador.manage().window().maximize();
-            navegador.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+        navegador.manage().window().maximize();
+        navegador.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
 
-            HomePage homePage = new HomePage(navegador);
-            homePage.acessarPaginaHomeMercadoLivre();
-            homePage.inserirPesquisaMercadoLivre("okdsaokdak");
-            homePage.fazerPesquisaMercadoLivre();
-            SearchPage searchPage = new SearchPage(navegador);
-            String mensagem = searchPage.obterResultadoPesquisaInvalida();
+        HomePage homePage = new HomePage(navegador);
+        homePage.acessarPaginaHomeMercadoLivre();
+        homePage.inserirPesquisaMercadoLivre("okdsaokdak");
+        homePage.fazerPesquisaMercadoLivre();
+        SearchPage searchPage = new SearchPage(navegador);
+        String mensagem = searchPage.obterResultadoPesquisaInvalida();
 
-            Assertions.assertEquals("Não há anúncios que correspondam à sua busca", mensagem);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Assertions.assertEquals("Não há anúncios que correspondam à sua busca", mensagem);
+
 
     }
 
