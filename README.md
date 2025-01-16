@@ -14,22 +14,6 @@ Esse pequeno projeto contém testes automatizados desenvolvidos para validar a f
 
 ---
 
-## 📂 Estrutura do Projeto  
-
-O projeto foi estruturado seguindo boas práticas de automação e Page Object Model (POM), que separa as responsabilidades de cada classe e facilita a manutenção do código.
-
-```
-├── org.com.laetproject.mercado
-│   ├── BasePage.java             // Classe base para inicializar elementos do Selenium
-│   ├── test
-│   │   └── PesquisaTests.java    // Classe de testes automatizados com JUnit
-│   └── pages
-│       ├── HomePage.java         // Página inicial do Mercado Livre
-│       └── SearchPage.java       // Página de resultados da pesquisa
-```
-
----
-
 ## ⚙️ Como Executar os Testes  
 
 ### Pré-requisitos  
@@ -45,29 +29,10 @@ O projeto foi estruturado seguindo boas práticas de automação e Page Object M
    cd projeto-klok
    ```
 
-2. Configure as dependências do Maven no arquivo `pom.xml`:
-   ```xml
-   <dependencies>
-       <dependency>
-           <groupId>org.seleniumhq.selenium</groupId>
-           <artifactId>selenium-java</artifactId>
-           <version>4.11.0</version>
-       </dependency>
-       <dependency>
-           <groupId>io.github.bonigarcia</groupId>
-           <artifactId>webdrivermanager</artifactId>
-           <version>5.5.3</version>
-       </dependency>
-       <dependency>
-           <groupId>org.junit.jupiter</groupId>
-           <artifactId>junit-jupiter</artifactId>
-           <version>5.10.0</version>
-       </dependency>
-   </dependencies>
-   ```
+2. Abra o projeto no Intellj IDEA
 
 ---
-## Tratativa de Erros Comuns no WebDriver
+### Tratativa de Erros Comuns no WebDriver
 
 Em alguns casos, o Chrome pode abrir e fechar imediatamente, estourando erros relacionados à versão do WebDriver. Para resolver isso, é possível limpar o cache do driver e a resolução usando os métodos fornecidos pelo `WebDriverManager`.
 
