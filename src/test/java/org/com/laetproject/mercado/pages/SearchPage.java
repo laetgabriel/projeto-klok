@@ -9,7 +9,7 @@ public class SearchPage extends BasePage {
 
     @FindBy(xpath = "//*[@id=\"root-app\"]/div/div[3]/aside/div[1]/h1")
     private WebElement tituloResultadoPesquisaValidaElement;
-    @FindBy(xpath = "//*[@id=\"root-app\"]/div/div[3]/aside/div[1]/h1")
+    @FindBy(xpath = "//*[@id=\"root-app\"]/div/div/div[2]/h3")
     private WebElement tituloResultadoPesquisaInvalidaElement;
 
     public SearchPage(WebDriver navegador) {
