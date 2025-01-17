@@ -1,0 +1,93 @@
+drop table apolice
+CREATE TABLE cliente (
+    id_cliente SERIAL PRIMARY KEY,
+    nome VARCHAR(90) NOT NULL,
+    endereco TEXT NOT NULL,
+    telefone VARCHAR(15)
+);
+
+INSERT INTO cliente (nome, endereco, telefone)
+VALUES
+('Maria', 'Rua 1, 15', '(87) 94002-8922'),
+('Icaro', 'Rua B, 20', '(83) 99988-6038'),
+('Gabriel Laet', 'Sibas Brito, 17', '(87) 99601-5937'),
+('Adriano Moreno', 'Capitão Carlos, 15', '(87) 93232-5555'),
+('Carol Laet', 'José de Sá, 20', '(83) 94444-5554'),
+('Clotilde Freitas', 'Quadra C, 71', '(87) 99002-8422');
+
+-- Deixei duas soluções para a tabela de apolice, uma com enum e a outra com boolean
+-- A primeira demonstra mais clareza e simplicidade na visualização do usuário
+-- Diferente da segunda, que usa termos true e false e alguns usuários podem não entender
+-- As duas tem a mesma proposta, mas com soluções diferentes, a escolha depende da legibilidade que o sistema vai adotar
+
+CREATE TYPE status_apolice_enum AS ENUM ('ativa', 'inativa');
+
+CREATE TABLE apolice (
+    id_apolice SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    numero_apolice VARCHAR(50) NOT NULL UNIQUE,
+    tipo_seguro VARCHAR(50) NOT NULL,
+    valor_premio NUMERIC(10, 2) NOT NULL,
+    status status_apolice_enum DEFAULT 'ativa' NOT NULL,
+    CONSTRAINT fk_apolice_cliente FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
+);
+
+INSERT INTO apolice (id_cliente, numero_apolice, tipo_seguro, valor_premio, status)
+VALUES
+(1, '00001', 'Automovel', 2500.00, 'ativa'),
+(3, '00002', 'Viagem', 1552.00, 'ativa'),
+(2, '00003', 'Vida', 2080.00, 'inativa'),
+(4, '00004', 'Vida', 1600.00, 'ativa'),
+(5, '00005', 'Automovel', 1900.00, 'inativa'),
+(6, '00006', 'Vida', 2100.00, 'ativa');
+
+-- Tabela apolice usando status com boolean
+
+CREATE TABLE apolice (
+    id_apolice SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    numero_apolice VARCHAR(50) NOT NULL UNIQUE,
+    tipo_seguro VARCHAR(50) NOT NULL,
+    valor_premio NUMERIC(10, 2) NOT NULL,
+    status BOOLEAN DEFAULT true NOT NULL,
+    CONSTRAINT fk_apolice_cliente FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
+);
+
+INSERT INTO apolice (id_cliente, numero_apolice, tipo_seguro, valor_premio, status)
+VALUES
+(1, '00001', 'Automovel', 2500.00, true),
+(3, '00002', 'Viagem', 1552.00, true),
+(2, '00003', 'Vida', 2080.00, false),
+(4, '00004', 'Vida', 1600.00, true),
+(5, '00005', 'Automovel', 1900.00, false),
+(6, '00006', 'Vida', 2100.00, true);
+
+-- Consulta utilizando enum
+
+SELECT
+    c.nome AS nome_cliente,
+    a.numero_apolice,
+    a.tipo_seguro,
+    a.valor_premio,
+	a.status
+FROM
+    apolice a
+JOIN
+    cliente c ON a.id_cliente = c.id_cliente
+WHERE
+    a.status = 'ativa';
+
+-- Consulta utilizando boolean
+
+SELECT
+    c.nome AS nome_cliente,
+    a.numero_apolice,
+    a.tipo_seguro,
+    a.valor_premio,
+	a.status
+FROM
+    apolice a
+JOIN
+    cliente c ON a.id_cliente = c.id_cliente
+WHERE
+    a.status = true;
