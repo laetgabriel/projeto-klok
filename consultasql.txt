@@ -1,4 +1,3 @@
-drop table apolice
 CREATE TABLE cliente (
     id_cliente SERIAL PRIMARY KEY,
     nome VARCHAR(90) NOT NULL,
